@@ -1,0 +1,76 @@
+import random
+
+size = 10
+array = [i for i in range(size)]
+random.shuffle(array)
+print(array)
+
+
+def quick_sort(array):  # версия с потреблением дополнительной памяти
+    # Функция рекурсивная. Описываем базовый случай:
+    if len(array) <= 1:
+        return array
+
+    # Выбираем опорный элемент. как вариант, его можно выбирать случайно
+    # при этом увеличением сложности алгоритма можно пренебречь, она останется O(N * log N)
+    pivot = random.choice(array)
+
+    # при сравнении элементов будем перемещать их во временные списки
+    small_array = []
+    medium_array = []
+    large_array = []
+
+    for item in array:
+        if item < pivot:
+            small_array.append(item)
+        elif item > pivot:
+            large_array.append(item)
+        elif item == pivot:
+            medium_array.append(item)
+        else:
+            raise Exception('Непредвиденная ошибка!')
+
+    # print(small_array, medium_array, large_array)
+    return quick_sort(small_array) + medium_array + quick_sort(large_array)
+
+
+# sorted_array = quick_sort(array)
+# print(sorted_array)
+
+
+# в функцию передаются сам массив, значение первого элемента, от которого будет начинаться сортировка,
+# и значение меньшего элемента, до которого будет идти сортировка
+# first и last - указатели для рекурсивной сортировки
+def quick_sort_no_add_memory(array, first, last):
+    # базовый случай. В функцию передается массив, длинной 1 или 0 элементов
+    if first >= last:
+        return
+
+    # print(array)
+    # print(first, last)
+    # выбираем опорный элемент
+    pivot = array[random.randint(first, last)]
+    # print(f'pivot = {pivot}')
+
+    # вводим новые переменные. нужны для перестановки местами элементов
+    # и для прередачи first, last во вложенную рекурсию
+    i, j = first, last
+
+    while i <= j:
+        while array[i] < pivot:
+            i += 1
+        while array[j] > pivot:
+            j -= 1
+        # print(f'i = {i}')
+        # print(f'j = {j}')
+        if i <= j:
+            array[i], array[j] = array[j], array[i]
+            i += 1
+            j -= 1
+
+    quick_sort_no_add_memory(array, first, j)
+    quick_sort_no_add_memory(array, i, last)
+
+
+quick_sort_no_add_memory(array, 0, len(array) - 1)
+print(array)
