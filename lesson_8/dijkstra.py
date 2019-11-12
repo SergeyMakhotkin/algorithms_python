@@ -32,7 +32,6 @@ def dijkstra(graph, start):
     while min_cost < float('inf'):
         is_visited[start] = True
 
-
         # вычисление стоимости пути до смежных вершин.
         # в цикле проверяем, есть ли ребра к вершинам, которые мы не посещали
         # если да - проверяем расстояния до них
@@ -46,7 +45,6 @@ def dijkstra(graph, start):
                     # записываем информацию о (новом) родителе
 
                     parent[i] = start
-                    path[i].append(start)
 
         min_cost = float('inf')
         for i in range(length):
@@ -54,6 +52,15 @@ def dijkstra(graph, start):
             if min_cost > cost[i] and not is_visited[i]:
                 min_cost = cost[i]
                 start = i
+
+    for i in range(length - 1, -1, -1):
+        j = i
+        deq = deque([])
+        while parent[j] != -1:
+            deq.appendleft(parent[j])
+            path[i] = list(deq)
+            j = parent[j]
+        path[i].append(i)
 
     return cost, path
 
