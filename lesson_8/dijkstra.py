@@ -28,7 +28,7 @@ def dijkstra(graph, start):
     path = [[] for _ in range(length)]
 
     cost[start] = 0
-    min_cost = 0  # показывает, двигаемся ли мы по графу
+    min_cost = 0  # отвечает за движение по графу и завершение алгоритма
     while min_cost < float('inf'):
         is_visited[start] = True
 
@@ -43,7 +43,6 @@ def dijkstra(graph, start):
                 if cost[i] > vertex + cost[start]:
                     cost[i] = vertex + cost[start]
                     # записываем информацию о (новом) родителе
-
                     parent[i] = start
 
         min_cost = float('inf')
