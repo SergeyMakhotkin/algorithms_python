@@ -2,6 +2,7 @@ from binarytree import bst
 
 
 def search(bin_search_tree, number, path=''):
+    # на вход передаем дерево, число для поиска и переменную path, в которой сохраняется путь
     if bin_search_tree.value == number:
         return f'Число {number} обнаружено по следующему пути: \nКорень {path}'
 
